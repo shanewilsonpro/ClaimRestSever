@@ -4,7 +4,7 @@ import Foundation
 import Kitura
 import Cocoa
 
-print("Starting REST Server...")
+print("Starting REST server...")
 
 let router = Router()
 
@@ -29,8 +29,8 @@ router.post("/ClaimService/add") { request, response, next in
     let jObj = body?.asJSON // JSON object
     if let jDict = jObj as? [String:String] {
         if let title = jDict["title"], let date = jDict["date"] {
-            let claimObj = Claim(id: UUID(), title: title, date: date, isSolved: false)
-            ClaimDao().addClaim(claimObj: claimObj)
+            let claimVar = Claim(id: UUID(), title: title, date: date, isSolved: false)
+            ClaimDao().addClaim(claimVar: claimVar)
         }
     }
     response.send("The Claim record was successfully inserted (via POST Method).")

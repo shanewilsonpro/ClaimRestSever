@@ -29,8 +29,8 @@ struct Claim : Codable {
 
 
 class ClaimDao {
-    func addClaim(claimObj: Claim) {
-        let sqlStmt = "insert into claim (id, title, date, isSolved) values ('\(claimObj.id.uuidString)', '\(claimObj.title)', '\(claimObj.date)', '\(claimObj.isSolved ? 1 : 0)')"
+    func addClaim(claimVar: Claim) {
+        let sqlStmt = "insert into claim (id, title, date, isSolved) values ('\(claimVar.id.uuidString)', '\(claimVar.title)', '\(claimVar.date)', '\(claimVar.isSolved ? 1 : 0)')"
         // Get database connection
         let conn = Database.getInstance().getDbConnection()
         // Submit the insert sql statement
@@ -48,8 +48,6 @@ class ClaimDao {
         let conn = Database.getInstance().getDbConnection()
         if sqlite3_prepare_v2(conn, sqlStr, -1, &resultSet, nil) == SQLITE_OK {
             while(sqlite3_step(resultSet) == SQLITE_ROW) {
-                // Convert the record into a Claim object
-                // Unsafe Pointer<Uint8> Sqlite3
                 let id_val = sqlite3_column_text(resultSet, 0)
                 let id = UUID(uuidString: String(cString: id_val!))
                 let title_val = sqlite3_column_text(resultSet, 1)
